@@ -1,30 +1,47 @@
-import { execFile } from "child_process";
-import { promisify } from "util";
+import type { ChatMessage } from "./history";
 
-const execFileAsync = promisify(execFile);
+const MODEL_MAP = {
+  haiku: "claude-haiku-4-5-20251001",
+  sonnet: "claude-sonnet-4-6",
+  opus: "claude-opus-4-6",
+} as const;
 
-const CLAUDE_CLI = process.env.CLAUDE_CLI_PATH!;
+const OAUTH_TOKEN = process.env.CLAUDE_OAUTH_TOKEN!;
 
 export async function callClaude(
   systemPrompt: string,
   message: string,
-  model: "haiku" | "sonnet" | "opus" = "haiku"
+  model: "haiku" | "sonnet" | "opus" = "haiku",
+  history: ChatMessage[] = []
 ): Promise<string> {
-  const { stdout, stderr } = await execFileAsync(
-    CLAUDE_CLI,
-    [
-      "-p",
-      "--model", model,
-      "--append-system-prompt", systemPrompt,
-      "--output-format", "json",
-      "--dangerously-skip-permissions",
-      message,
-    ],
-    { timeout: 60000 }
-  );
+  const messages: ChatMessage[] = [
+    ...history,
+    { role: "user", content: message },
+  ];
 
-  if (stderr) console.error("[Claude CLI stderr]", stderr);
+  const res = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${OAUTH_TOKEN}`,
+      "anthropic-version": "2023-06-01",
+      "anthropic-beta": "oauth-2025-04-20",
+    },
+    body: JSON.stringify({
+      model: MODEL_MAP[model],
+      max_tokens: 2048,
+      system: systemPrompt,
+      messages,
+    }),
+  });
 
-  const result = JSON.parse(stdout);
-  return result.result ?? result.content ?? stdout;
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`Claude API error ${res.status}: ${err}`);
+  }
+
+  const data = await res.json();
+  const block = data.content?.[0];
+  if (!block || block.type !== "text") throw new Error("unexpected response");
+  return block.text;
 }

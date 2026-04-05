@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <circle cx="60" cy="60" r="60" fill="#d1d4f9"/>
+  <!-- face -->
+  <ellipse cx="60" cy="72" rx="28" ry="30" fill="white" stroke="black" stroke-width="2.5"/>
+  <!-- hair: short gray/salt-pepper, thinning at top -->
+  <path d="M32 66 Q32 48 60 46 Q88 48 88 66 L86 60 Q84 46 60 44 Q36 46 34 60Z" fill="#888"/>
+  <!-- thinning top area -->
+  <ellipse cx="60" cy="50" rx="12" ry="6" fill="white" opacity="0.6"/>
+  <!-- ears -->
+  <ellipse cx="32" cy="72" rx="5" ry="7" fill="white" stroke="black" stroke-width="2"/>
+  <ellipse cx="88" cy="72" rx="5" ry="7" fill="white" stroke="black" stroke-width="2"/>
+  <!-- eyebrows: heavy, experienced -->
+  <path d="M42 62 L57 60" stroke="#555" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M63 60 L78 62" stroke="#555" stroke-width="3.5" stroke-linecap="round"/>
+  <!-- eyes: slightly narrower, seasoned -->
+  <ellipse cx="50" cy="69" rx="6" ry="4.5" fill="white" stroke="black" stroke-width="2"/>
+  <circle cx="51" cy="70" r="2.5" fill="black"/>
+  <ellipse cx="70" cy="69" rx="6" ry="4.5" fill="white" stroke="black" stroke-width="2"/>
+  <circle cx="71" cy="70" r="2.5" fill="black"/>
+  <!-- wrinkle lines -->
+  <path d="M44 65 Q46 63 48 65" stroke="black" stroke-width="1" fill="none" opacity="0.4"/>
+  <path d="M72 65 Q74 63 76 65" stroke="black" stroke-width="1" fill="none" opacity="0.4"/>
+  <!-- nose: prominent -->
+  <path d="M56 78 Q60 84 64 78" stroke="black" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- mouth: serious/neutral -->
+  <path d="M51 88 Q60 91 69 88" stroke="black" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+</svg>

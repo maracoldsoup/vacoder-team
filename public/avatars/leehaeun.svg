@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <circle cx="60" cy="60" r="60" fill="#ffd6a5"/>
+  <!-- long hair back -->
+  <ellipse cx="60" cy="88" rx="34" ry="26" fill="black"/>
+  <rect x="26" y="62" width="14" height="48" rx="7" fill="black"/>
+  <rect x="80" y="62" width="14" height="48" rx="7" fill="black"/>
+  <!-- face -->
+  <ellipse cx="60" cy="70" rx="27" ry="29" fill="white" stroke="black" stroke-width="2.5"/>
+  <!-- hair front top: smooth, elegant -->
+  <path d="M33 64 Q33 40 60 38 Q87 40 87 64 L85 56 Q80 38 60 36 Q40 38 35 56Z" fill="black"/>
+  <!-- elegant center parting detail -->
+  <path d="M60 38 L60 52" stroke="white" stroke-width="1.5" opacity="0.4"/>
+  <!-- ears (mostly hidden by hair) -->
+  <ellipse cx="33" cy="70" rx="4" ry="5.5" fill="white" stroke="black" stroke-width="2"/>
+  <ellipse cx="87" cy="70" rx="4" ry="5.5" fill="white" stroke="black" stroke-width="2"/>
+  <!-- eyebrows: elegant fine arch -->
+  <path d="M43 59 Q51 55 57 58" stroke="black" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M63 58 Q69 55 77 59" stroke="black" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- eyes: elegant, slightly almond -->
+  <ellipse cx="50" cy="66" rx="6.5" ry="5" fill="white" stroke="black" stroke-width="2"/>
+  <circle cx="51" cy="67" r="3" fill="black"/>
+  <circle cx="52" cy="66" r="1" fill="white"/>
+  <ellipse cx="70" cy="66" rx="6.5" ry="5" fill="white" stroke="black" stroke-width="2"/>
+  <circle cx="71" cy="67" r="3" fill="black"/>
+  <circle cx="72" cy="66" r="1" fill="white"/>
+  <!-- lashes: simple upper line -->
+  <path d="M43 63 Q50 60 57 63" stroke="black" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M63 63 Q70 60 77 63" stroke="black" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- nose -->
+  <path d="M57 75 Q60 79 63 75" stroke="black" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- mouth: confident, stylish -->
+  <path d="M51 82 Q60 88 69 82" stroke="black" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+</svg>

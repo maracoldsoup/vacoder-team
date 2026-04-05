@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
+import { waitUntil } from "@vercel/functions";
 import { orchestrate, callMember } from "@/lib/orchestrator";
 import { TEAM, MemberKey } from "@/lib/personas";
+import { loadHistory, appendHistory, clearHistory } from "@/lib/history";
 
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN!;
 const OWNER_CHAT_ID = process.env.TELEGRAM_OWNER_CHAT_ID!;
@@ -27,7 +29,6 @@ async function editMessage(chatId: number | string, messageId: number, text: str
 function parseMention(text: string): { key: MemberKey; message: string } | null {
   const match = text.match(/^@(\S+)\s+([\s\S]+)/);
   if (!match) return null;
-
   const found = Object.values(TEAM).find(
     (m) => m.name.includes(match[1]) || m.key === match[1]
   );
@@ -36,15 +37,13 @@ function parseMention(text: string): { key: MemberKey; message: string } | null 
 }
 
 async function handleMessage(chatId: string, text: string) {
-  console.log("[Bot] message:", text, "from:", chatId);
-
   if (chatId !== OWNER_CHAT_ID) {
     await sendMessage(chatId, "접근 권한이 없습니다.");
     return;
   }
 
   if (text === "/start") {
-    await sendMessage(chatId, `Vacoder AI 팀에 오신 것을 환영합니다, 대표님!\n\n사용법:\n• 업무 지시 → 김도영 상무가 팀 투입\n• @이름 메시지 → 팀원에게 직접\n• /team → 팀원 목록`);
+    await sendMessage(chatId, `Vacoder AI 팀에 오신 것을 환영합니다, 대표님!\n\n사용법:\n• 업무 지시 → 김도영 상무가 팀 투입\n• @이름 메시지 → 팀원에게 직접\n• /team → 팀원 목록\n• /clear → 대화 기록 초기화`);
     return;
   }
 
@@ -54,13 +53,22 @@ async function handleMessage(chatId: string, text: string) {
     return;
   }
 
+  if (text === "/clear") {
+    await clearHistory(chatId);
+    await sendMessage(chatId, "✅ 대화 기록이 초기화되었습니다.");
+    return;
+  }
+
+  const history = await loadHistory(chatId);
+
   const mention = parseMention(text);
   if (mention) {
     const member = TEAM[mention.key];
     const msgId = await sendMessage(chatId, `${member.emoji} ${member.name}에게 전달 중...`);
     try {
-      const response = await callMember(mention.key, mention.message);
+      const response = await callMember(mention.key, mention.message, history);
       await editMessage(chatId, msgId, `${member.emoji} ${member.name}\n\n${response}`);
+      await appendHistory(chatId, text, response);
     } catch (err) {
       await editMessage(chatId, msgId, `오류: ${String(err)}`);
     }
@@ -68,21 +76,28 @@ async function handleMessage(chatId: string, text: string) {
   }
 
   // 일반 메시지 → 오케스트레이션
-  const msgId = await sendMessage(chatId, "🎯 김도영 상무가 팀을 구성하고 있습니다...");
+  const statusMsgId = await sendMessage(chatId, "🎯 김도영 상무가 팀을 구성하고 있습니다...");
 
   try {
-    const report = await orchestrate(text, async (step, data) => {
+    const { report } = await orchestrate(text, history, async (step, data) => {
       if (step === "working" && Array.isArray(data)) {
         const names = (data as MemberKey[]).map((k) => TEAM[k]?.name).filter(Boolean).join(", ");
-        await editMessage(chatId, msgId, `⚙️ 작업 중: ${names}`);
+        await editMessage(chatId, statusMsgId, `⚙️ 투입: ${names}`);
+      } else if (step === "member_result" && data && typeof data === "object") {
+        const { key, result } = data as { key: MemberKey; result: string };
+        const member = TEAM[key];
+        if (member) {
+          await sendMessage(chatId, `${member.emoji} ${member.name}\n\n${result}`);
+        }
       } else if (step === "reviewing") {
-        await editMessage(chatId, msgId, "📋 김도영 상무가 결과를 종합하고 있습니다...");
+        await editMessage(chatId, statusMsgId, "📋 김도영 상무가 결과를 종합하고 있습니다...");
       }
     });
 
-    await editMessage(chatId, msgId, `🎯 김도영 상무\n\n${report}`);
+    await sendMessage(chatId, `🎯 김도영 상무 (종합)\n\n${report}`);
+    await appendHistory(chatId, text, report);
   } catch (err) {
-    await editMessage(chatId, msgId, `오류: ${String(err)}`);
+    await editMessage(chatId, statusMsgId, `오류: ${String(err)}`);
   }
 }
 
@@ -95,10 +110,8 @@ export async function POST(req: NextRequest) {
 
     if (message?.text) {
       const chatId = String(message.chat.id);
-      // 비동기로 처리 (텔레그램에 즉시 200 반환)
-      handleMessage(chatId, message.text).catch((err) =>
-        console.error("[Handler Error]", err)
-      );
+      // waitUntil: Vercel이 응답 후에도 처리 완료까지 함수 유지
+      waitUntil(handleMessage(chatId, message.text));
     }
   } catch (err) {
     console.error("[Parse Error]", err);

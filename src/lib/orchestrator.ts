@@ -1,5 +1,6 @@
 import { callClaude } from "./claude";
 import { TEAM, TEAM_MEMBERS, MemberKey } from "./personas";
+import type { ChatMessage } from "./history";
 
 interface OrchestratorPlan {
   members: MemberKey[];
@@ -7,7 +8,7 @@ interface OrchestratorPlan {
 }
 
 // 1단계: 상무가 어떤 팀원을 투입할지 결정
-async function plan(message: string): Promise<OrchestratorPlan> {
+async function plan(message: string, history: ChatMessage[]): Promise<OrchestratorPlan> {
   const memberList = TEAM_MEMBERS.map((m) => `${m.key}: ${m.name}(${m.role})`).join(", ");
 
   const planPrompt = `대표님으로부터 다음 요청이 왔습니다:
@@ -22,7 +23,8 @@ ${memberList}
   const response = await callClaude(
     TEAM["kimdoyoung"].systemPrompt,
     planPrompt,
-    "sonnet"
+    "sonnet",
+    history
   );
 
   try {
@@ -30,7 +32,6 @@ ${memberList}
     if (!jsonMatch) throw new Error("JSON not found");
     return JSON.parse(jsonMatch[0]) as OrchestratorPlan;
   } catch {
-    // 파싱 실패 시 전체 팀 투입
     return {
       members: TEAM_MEMBERS.map((m) => m.key),
       brief: message,
@@ -38,27 +39,30 @@ ${memberList}
   }
 }
 
-// 2단계: 선택된 팀원들 병렬 호출
+// 2단계: 선택된 팀원들 순차 호출
 async function work(
-  plan: OrchestratorPlan,
-  originalMessage: string
+  orchPlan: OrchestratorPlan,
+  originalMessage: string,
+  onMemberResult?: (key: MemberKey, result: string) => void
 ): Promise<Record<string, string>> {
   const results: Record<string, string> = {};
 
-  await Promise.all(
-    plan.members.map(async (key) => {
-      const member = TEAM[key];
-      if (!member) return;
+  for (const key of orchPlan.members) {
+    const member = TEAM[key];
+    if (!member) continue;
 
-      const response = await callClaude(
-        member.systemPrompt,
-        `대표님 요청: "${originalMessage}"\n\n작업 지시: ${plan.brief}\n\n당신의 전문 영역에서 의견을 주세요.`,
-        member.model
-      );
+    const result = await callClaude(
+      member.systemPrompt,
+      `대표님 요청: "${originalMessage}"\n\n작업 지시: ${orchPlan.brief}\n\n당신의 전문 영역에서 의견을 주세요.`,
+      member.model
+      // 팀원 개별 작업에는 히스토리 불필요 (현재 태스크에만 집중)
+    );
 
-      results[key] = response;
-    })
-  );
+    results[key] = result;
+    onMemberResult?.(key, result);
+
+    await new Promise((r) => setTimeout(r, 500));
+  }
 
   return results;
 }
@@ -66,7 +70,8 @@ async function work(
 // 3단계: 상무가 결과 종합해서 보고
 async function review(
   originalMessage: string,
-  memberResults: Record<string, string>
+  memberResults: Record<string, string>,
+  history: ChatMessage[]
 ): Promise<string> {
   const summaryLines = Object.entries(memberResults)
     .map(([key, result]) => {
@@ -85,34 +90,39 @@ ${summaryLines}
   return await callClaude(
     TEAM["kimdoyoung"].systemPrompt,
     reviewPrompt,
-    "sonnet"
+    "sonnet",
+    history
   );
 }
 
 // 전체 오케스트레이션 실행
 export async function orchestrate(
   message: string,
+  history: ChatMessage[] = [],
   onProgress?: (step: string, data?: unknown) => void
-): Promise<string> {
+): Promise<{ report: string; memberResults: Record<string, string> }> {
   onProgress?.("planning");
-  const orchPlan = await plan(message);
+  const orchPlan = await plan(message, history);
 
   onProgress?.("working", orchPlan.members);
-  const results = await work(orchPlan, message);
+  const memberResults = await work(orchPlan, message, (key, result) => {
+    onProgress?.("member_result", { key, result });
+  });
 
   onProgress?.("reviewing");
-  const report = await review(message, results);
+  const report = await review(message, memberResults, history);
 
-  return report;
+  return { report, memberResults };
 }
 
 // @멘션 직접 호출
 export async function callMember(
   memberKey: MemberKey,
-  message: string
+  message: string,
+  history: ChatMessage[] = []
 ): Promise<string> {
   const member = TEAM[memberKey];
   if (!member) throw new Error(`Unknown member: ${memberKey}`);
 
-  return await callClaude(member.systemPrompt, message, member.model);
+  return await callClaude(member.systemPrompt, message, member.model, history);
 }

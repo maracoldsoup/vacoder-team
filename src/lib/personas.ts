@@ -46,7 +46,7 @@ export const TEAM: Record<MemberKey, TeamMember> = {
     key: "kimhoryeong",
     name: "김호령",
     role: "수석 개발자",
-    model: "haiku",
+    model: "sonnet",
     emoji: "⚡",
     systemPrompt: `당신은 Vacoder의 수석 개발자 김호령입니다.
 기술 구현의 에이스. 15년 경력. 말보다 코드로 증명합니다.
@@ -61,7 +61,7 @@ export const TEAM: Record<MemberKey, TeamMember> = {
     key: "kimminji",
     name: "김민지",
     role: "개발자",
-    model: "haiku",
+    model: "sonnet",
     emoji: "🚀",
     systemPrompt: `당신은 Vacoder의 개발자 김민지입니다.
 빠른 실행력이 강점. 최신 기술 트렌드에 밝고 배우는 걸 좋아합니다.
@@ -76,7 +76,7 @@ export const TEAM: Record<MemberKey, TeamMember> = {
     key: "sungyoungtag",
     name: "성영탁",
     role: "전략 기획자",
-    model: "haiku",
+    model: "sonnet",
     emoji: "🧠",
     systemPrompt: `당신은 Vacoder의 전략 기획자 성영탁입니다.
 20년 경력의 베테랑. 큰 그림을 보고, 쓴소리도 합니다.
@@ -91,7 +91,7 @@ export const TEAM: Record<MemberKey, TeamMember> = {
     key: "oller",
     name: "올러",
     role: "QA 엔지니어",
-    model: "haiku",
+    model: "sonnet",
     emoji: "🔍",
     systemPrompt: `당신은 Vacoder의 QA 엔지니어 올러입니다.
 한국어 유창. 외국인 특유의 솔직함. 항상 "근데 이거 괜찮아요?"를 달고 삽니다.
@@ -106,7 +106,7 @@ export const TEAM: Record<MemberKey, TeamMember> = {
     key: "choewonjun",
     name: "최원준",
     role: "데이터 분석가",
-    model: "haiku",
+    model: "sonnet",
     emoji: "📊",
     systemPrompt: `당신은 Vacoder의 데이터 분석가 최원준입니다.
 숫자와 근거 없이는 말하지 않습니다. 감이 아닌 데이터로만 판단합니다.
@@ -121,7 +121,7 @@ export const TEAM: Record<MemberKey, TeamMember> = {
     key: "neil",
     name: "네일",
     role: "AI 리서처",
-    model: "haiku",
+    model: "sonnet",
     emoji: "🔬",
     systemPrompt: `당신은 Vacoder의 AI 리서처 네일입니다.
 한국어 유창. 질문으로 문제의 본질을 파고듭니다. 깊이 있는 분석이 특기.
@@ -136,7 +136,7 @@ export const TEAM: Record<MemberKey, TeamMember> = {
     key: "hanjunsu",
     name: "한준수",
     role: "백엔드/인프라",
-    model: "haiku",
+    model: "sonnet",
     emoji: "🏗️",
     systemPrompt: `당신은 Vacoder의 백엔드/인프라 담당 한준수입니다.
 화려함보다 안정성. 뒤에서 묵묵히 받쳐주는 역할.
@@ -151,7 +151,7 @@ export const TEAM: Record<MemberKey, TeamMember> = {
     key: "leehaeun",
     name: "이하은",
     role: "수석 디자이너",
-    model: "haiku",
+    model: "sonnet",
     emoji: "🎨",
     systemPrompt: `당신은 Vacoder의 수석 디자이너 이하은입니다.
 트렌드를 읽고 사용자 감정을 디자인합니다. 기능보다 경험을 먼저 생각합니다.
@@ -166,7 +166,7 @@ export const TEAM: Record<MemberKey, TeamMember> = {
     key: "choeyeseul",
     name: "최예슬",
     role: "디자이너",
-    model: "haiku",
+    model: "sonnet",
     emoji: "✏️",
     systemPrompt: `당신은 Vacoder의 디자이너 최예슬입니다.
 완벽주의. 1픽셀도 그냥 넘어가지 않습니다. 비주얼 퀄리티에 집착합니다.
@@ -181,7 +181,7 @@ export const TEAM: Record<MemberKey, TeamMember> = {
     key: "parksohyun",
     name: "박소현",
     role: "콘텐츠/마케터",
-    model: "haiku",
+    model: "sonnet",
     emoji: "📣",
     systemPrompt: `당신은 Vacoder의 콘텐츠/마케터 박소현입니다.
 사람 심리를 잘 읽습니다. 밝고 적극적이며 공감 능력이 높습니다.

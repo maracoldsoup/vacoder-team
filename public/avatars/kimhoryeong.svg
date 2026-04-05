@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <circle cx="60" cy="60" r="60" fill="#c0aede"/>
+  <!-- face -->
+  <ellipse cx="60" cy="72" rx="28" ry="30" fill="white" stroke="black" stroke-width="2.5"/>
+  <!-- hair: short cropped, slightly spiky -->
+  <path d="M32 64 Q32 40 60 38 Q88 40 88 64 L86 56 Q82 38 60 36 Q38 38 34 56Z" fill="black"/>
+  <!-- spiky tops -->
+  <path d="M48 39 L46 32 L50 38" fill="black"/>
+  <path d="M58 37 L57 30 L62 37" fill="black"/>
+  <path d="M68 39 L70 32 L72 38" fill="black"/>
+  <!-- ears -->
+  <ellipse cx="32" cy="72" rx="5" ry="6" fill="white" stroke="black" stroke-width="2"/>
+  <ellipse cx="88" cy="72" rx="5" ry="6" fill="white" stroke="black" stroke-width="2"/>
+  <!-- eyebrows: furrowed/focused -->
+  <path d="M43 63 Q50 59 57 62" stroke="black" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M63 62 Q70 59 77 63" stroke="black" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- eyes: narrow focused -->
+  <ellipse cx="50" cy="69" rx="6" ry="4" fill="white" stroke="black" stroke-width="2"/>
+  <circle cx="51" cy="69" r="2" fill="black"/>
+  <ellipse cx="70" cy="69" rx="6" ry="4" fill="white" stroke="black" stroke-width="2"/>
+  <circle cx="71" cy="69" r="2" fill="black"/>
+  <!-- nose -->
+  <path d="M57 78 Q60 82 63 78" stroke="black" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- mouth: neutral/slight tight line -->
+  <path d="M52 87 Q60 90 68 87" stroke="black" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <circle cx="60" cy="60" r="60" fill="#ffd5dc"/>
+  <!-- hair back (bob) -->
+  <rect x="30" y="60" width="60" height="32" rx="8" fill="black"/>
+  <!-- face -->
+  <ellipse cx="60" cy="72" rx="27" ry="29" fill="white" stroke="black" stroke-width="2.5"/>
+  <!-- hair front: blunt bob top -->
+  <path d="M33 65 Q33 40 60 38 Q87 40 87 65 L85 58 Q80 38 60 36 Q40 38 35 58Z" fill="black"/>
+  <!-- bob sides: straight blunt ends -->
+  <rect x="28" y="57" width="8" height="24" rx="4" fill="black"/>
+  <rect x="84" y="57" width="8" height="24" rx="4" fill="black"/>
+  <!-- ears -->
+  <ellipse cx="33" cy="72" rx="4.5" ry="5.5" fill="white" stroke="black" stroke-width="2"/>
+  <ellipse cx="87" cy="72" rx="4.5" ry="5.5" fill="white" stroke="black" stroke-width="2"/>
+  <!-- eyebrows: raised cheerful -->
+  <path d="M43 61 Q50 57 57 60" stroke="black" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M63 60 Q70 57 77 61" stroke="black" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- eyes: wide bright -->
+  <ellipse cx="50" cy="68" rx="6.5" ry="6" fill="white" stroke="black" stroke-width="2"/>
+  <circle cx="51" cy="69" r="3" fill="black"/>
+  <circle cx="52.5" cy="68" r="1" fill="white"/>
+  <ellipse cx="70" cy="68" rx="6.5" ry="6" fill="white" stroke="black" stroke-width="2"/>
+  <circle cx="71" cy="69" r="3" fill="black"/>
+  <circle cx="72.5" cy="68" r="1" fill="white"/>
+  <!-- nose -->
+  <path d="M57 78 Q60 82 63 78" stroke="black" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- big bright smile -->
+  <path d="M48 86 Q60 96 72 86" stroke="black" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+</svg>

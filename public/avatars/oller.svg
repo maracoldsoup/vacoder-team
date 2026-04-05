@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <circle cx="60" cy="60" r="60" fill="#b5ead7"/>
+  <!-- face: slightly rounder for foreign look -->
+  <circle cx="60" cy="72" r="30" fill="white" stroke="black" stroke-width="2.5"/>
+  <!-- hair: wavy light brown -->
+  <path d="M30 66 Q30 40 60 38 Q90 40 90 66 L88 58 Q84 38 60 36 Q36 38 32 58Z" fill="#8B5E3C"/>
+  <!-- wavy detail on hair -->
+  <path d="M34 54 Q40 48 46 54 Q52 60 58 52" stroke="#6B3E1C" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M62 52 Q68 60 74 54 Q80 48 86 54" stroke="#6B3E1C" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- ears: slightly larger -->
+  <ellipse cx="30" cy="72" rx="5.5" ry="7" fill="white" stroke="black" stroke-width="2"/>
+  <ellipse cx="90" cy="72" rx="5.5" ry="7" fill="white" stroke="black" stroke-width="2"/>
+  <!-- eyebrows: worried arch -->
+  <path d="M42 61 Q50 56 57 60" stroke="black" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M63 60 Q70 56 78 61" stroke="black" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- eyes: wider/rounder (foreign) -->
+  <ellipse cx="50" cy="68" rx="7" ry="6.5" fill="white" stroke="black" stroke-width="2"/>
+  <circle cx="51" cy="69" r="3.5" fill="black"/>
+  <circle cx="52.5" cy="67.5" r="1.2" fill="white"/>
+  <ellipse cx="70" cy="68" rx="7" ry="6.5" fill="white" stroke="black" stroke-width="2"/>
+  <circle cx="71" cy="69" r="3.5" fill="black"/>
+  <circle cx="72.5" cy="67.5" r="1.2" fill="white"/>
+  <!-- nose -->
+  <path d="M57 78 Q60 83 63 78" stroke="black" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- mouth: slight concerned expression -->
+  <path d="M52 88 Q60 92 68 88" stroke="black" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+</svg>
